@@ -64,7 +64,7 @@ int main( int argc, char* argv[] )
         printf( "got %d bytes of normal data '%s'\n", ret, buffer );*/
 
         //使用sockatmark来判断是否是带外数据
-        for(int i=0;i<10;i++){
+        while(true){
             int judgeMark = sockatmark(connfd);
             if(judgeMark==-1){
                 perror("sockatmark error:");
@@ -72,12 +72,11 @@ int main( int argc, char* argv[] )
             }
             else if(judgeMark==1){
                 memset( buffer, '\0', BUF_SIZE );
-                ret = recv( connfd, buffer, BUF_SIZE-1, 0 );
-                //ret = recv( connfd, buffer, BUF_SIZE-1, MSG_OOB );
-                //if(ret==-1){
-                //    perror("Error:");
-                //}
-                //assert(ret!=-1);
+                ret = recv( connfd, buffer, BUF_SIZE-1, MSG_OOB );
+                if(ret==-1){
+                    perror("Error:");
+                }
+                assert(ret!=-1);
                 printf( "got %d bytes of oob data '%s'\n", ret, buffer );
             }else{
                 memset( buffer, '\0', BUF_SIZE );
