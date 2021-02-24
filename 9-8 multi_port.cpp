@@ -146,7 +146,6 @@ int main( int argc, char* argv[] )
             {
                 printf( "something else happened \n" );
             }
-        }
     }
 
     close( listenfd );
